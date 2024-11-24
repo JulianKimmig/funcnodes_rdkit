@@ -2,7 +2,6 @@ import funcnodes as fn
 import rdkit.Chem as Chem
 from .mol import NODE_SHELF as mol_shelf
 from .svg import mol_to_svg
-import os
 
 FUNCNODES_RENDER_OPTIONS: fn.RenderOptions = {
     "typemap": {
@@ -31,9 +30,13 @@ def molsvgencoder(obj, preview=False):
     if isinstance(obj, Chem.Mol):
         print("molsvgencoder", obj, preview)
         if preview:
-            return mol_to_svg(obj, size=(200, 200)), True
+            return fn.Encdata(
+                mol_to_svg(obj, size=(200, 200)), done=True, handeled=True
+            )
         else:
-            return mol_to_svg(obj, size=(500, 500)), True
+            return fn.Encdata(
+                mol_to_svg(obj, size=(200, 200)), done=True, handeled=True
+            )
     return None, False
 
 
